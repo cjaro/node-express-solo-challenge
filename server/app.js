@@ -1,11 +1,11 @@
 var express = require('express');
 var app = express();
+var bodyParser = require ('body-parser');
 var path = require('path');
 var port = 3000;
 
-
 // initial jokes provided by the client
-var jokes = [
+var jokesList = [
   {
     whoseJoke: "Luke",
     jokeQuestion: "Friends are like snow flakes...",
@@ -25,8 +25,27 @@ var jokes = [
 
 // static file requests
 app.use(express.static('server/public'));
+app.use(bodyParser.urlencoded({extended: true}));
 
-// routes
+
+// routes 3:01pm 3:14pm
+app.get('/jokes', function(req,res){
+  res.send(jokesList);
+});
+
+//3:28pm 4:00pm 4:16pm
+app.post('/newJoke', function(req, res){
+  var newJoke = req.body;
+  jokesList.push(newJoke);
+  console.log(jokesList);
+  res.sendStatus(200);
+  res.send(jokesList);
+});
+
+
+
+
+
 
 
 // Send index.html file
